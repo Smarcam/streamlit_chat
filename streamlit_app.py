@@ -14,21 +14,24 @@ def chatbot():
     elif "information" in user_input:
         query = user_input.replace("information", "").strip()
         results = search_google(query)
-        st.write("Here's what I found on Google:")
-        for result in results:
-            st.write("- [{}]({})".format(result["title"], result["link"]))
+        if not results:
+            st.write("No results found.")
+        else:
+            st.write("Here's what I found on Google:")
+            for result in results:
+                st.write("- [{}]({})".format(result["title"], result["link"]))
     else:
         st.write("I'm sorry, I don't understand what you mean.")
 
 def search_google(query):
     results = []
-    search_url = "https://www.google.com/search?q={}".format(query)
+    search_url = f"https://www.google.com/search?q={query}"
     response = requests.get(search_url)
     soup = BeautifulSoup(response.text, "html.parser")
     for g in soup.find_all("div", class_="r"):
         anchors = g.find_all("a")
         if anchors:
-            link = anchors[0]["href"]
+            link = anchors[0]["href"].split("/url?q=")[-1]
             title = g.find("h3").text
             item = {"title": title, "link": link}
             results.append(item)
