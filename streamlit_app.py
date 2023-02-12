@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
 
 def chatbot():
     st.title("Chatbot")
@@ -26,7 +27,10 @@ def chatbot():
 def search_google(query):
     results = []
     search_url = f"https://www.google.com/search?q={query}"
-    response = requests.get(search_url)
+    headers = {
+        "User-Agent": UserAgent().random,
+    }
+    response = requests.get(search_url, headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
     for g in soup.find_all("div", class_="r"):
         anchors = g.find_all("a")
