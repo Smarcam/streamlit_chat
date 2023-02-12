@@ -1,4 +1,3 @@
 streamlit
-requests
+selenium
 bs4
-fake_useragent
