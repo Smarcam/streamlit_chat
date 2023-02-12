@@ -1,4 +1,3 @@
 streamlit
-streamlit_chat
 transformers.BlenderbotTokenizer
 transformers.BlenderbotForConditionalGeneration
