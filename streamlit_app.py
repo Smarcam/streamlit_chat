@@ -5,24 +5,24 @@ from fake_useragent import UserAgent
 
 def chatbot():
     st.title("Chatbot")
-    user_input = st.text_input("Enter your message:").lower()
-    if "hi" in user_input:
-        st.write("Hello! How can I help you today?")
-    elif "name" in user_input:
-        st.write("I am a chatbot created with Streamlit.")
-    elif "do" in user_input:
-        st.write("I am here to assist you with any questions you may have.")
-    elif "information" in user_input:
-        query = user_input.replace("information", "").strip()
+    user_input = st.text_input("Itroduce tu mensaje:").lower()
+    if "hola" in user_input:
+        st.write("hola! Como puedo ayudarte?")
+    elif "nombre" or "llamas" in user_input:
+        st.write("me llamo pishita.")
+    elif "hacer" in user_input:
+        st.write("Estoy aquí para ayudarte con cualquier pregunta que puedas tener.")
+    elif "informacion" in user_input:
+        query = user_input.replace("informacion", "").strip()
         results = search_google(query)
         if not results:
-            st.write("No results found.")
+            st.write("No he ehcntrado resultados.")
         else:
-            st.write("Here's what I found on Google:")
+            st.write("aqui tienes lo que he encntrado en Google:")
             for result in results:
                 st.write("- [{}]({})".format(result["title"], result["link"]))
     else:
-        st.write("I'm sorry, I don't understand what you mean.")
+        st.write("lo siento, parece que te pasa algo en la boca, habla bien.")
 
 def search_google(query):
     results = []
