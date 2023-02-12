@@ -1,37 +1,32 @@
-import streamlit as st
-import requests
+from selenium import webdriver
 from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
 
 def chatbot():
-    st.title("Chatbot")
-    user_input = st.text_input("Itroduce tu mensaje:").lower()
-    if "hola" in user_input:
-        st.write("hola! Como puedo ayudarte?")
-    elif "llamas" in user_input:
-        st.write("me llamo pishita.")
-    elif "hacer" in user_input:
-        st.write("Estoy aquí para ayudarte con cualquier pregunta que puedas tener.")
-    elif "informacion" in user_input:
-        query = user_input.replace("informacion", "").strip()
+    user_input = input("Enter your message:").lower()
+    if "hi" in user_input:
+        print("Hello! How can I help you today?")
+    elif "name" in user_input:
+        print("I am a chatbot created with Streamlit.")
+    elif "do" in user_input:
+        print("I am here to assist you with any questions you may have.")
+    elif "information" in user_input:
+        query = user_input.replace("information", "").strip()
         results = search_google(query)
         if not results:
-            st.write("No he ehcntrado resultados.")
+            print("No results found.")
         else:
-            st.write("aqui tienes lo que he encntrado en Google:")
+            print("Here's what I found on Google:")
             for result in results:
-                st.write("- [{}]({})".format(result["title"], result["link"]))
+                print("- {} ({})".format(result["title"], result["link"]))
     else:
-        st.write("lo siento, parece que te pasa algo en la boca, habla bien.")
+        print("I'm sorry, I don't understand what you mean.")
 
 def search_google(query):
     results = []
     search_url = f"https://www.google.com/search?q={query}"
-    headers = {
-        "User-Agent": UserAgent().random,
-    }
-    response = requests.get(search_url, headers=headers)
-    soup = BeautifulSoup(response.text, "html.parser")
+    driver = webdriver.Firefox()
+    driver.get(search_url)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
     for g in soup.find_all("div", class_="r"):
         anchors = g.find_all("a")
         if anchors:
@@ -39,6 +34,7 @@ def search_google(query):
             title = g.find("h3").text
             item = {"title": title, "link": link}
             results.append(item)
+    driver.quit()
     return results
 
 if __name__ == '__main__':
