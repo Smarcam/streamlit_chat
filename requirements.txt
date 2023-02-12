@@ -1,3 +1,4 @@
 streamlit
 streamlit_chat
-transformers==3.0.2
+transformers.BlenderbotTokenizer
+transformers.BlenderbotForConditionalGeneration
