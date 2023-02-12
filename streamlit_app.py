@@ -8,7 +8,7 @@ def chatbot():
     user_input = st.text_input("Itroduce tu mensaje:").lower()
     if "hola" in user_input:
         st.write("hola! Como puedo ayudarte?")
-    elif "nombre" or "llamas" in user_input:
+    elif "llamas" in user_input:
         st.write("me llamo pishita.")
     elif "hacer" in user_input:
         st.write("Estoy aquí para ayudarte con cualquier pregunta que puedas tener.")
